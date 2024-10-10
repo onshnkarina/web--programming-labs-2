@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    background: rgb(225, 221, 221);
+}
+main {
+    margin-bottom: 40px; 
+    padding: 10px;
+    background: rgb(201, 181, 181);
+    text-shadow: 2px 2px 4px #4a3939;
+}
+header {
+    margin-bottom: 30px; 
+    padding: 20px;
+    background: rgb(141, 110, 103);
+    text-shadow: 2px 2px 4px #4a3939;
+}
+footer {
+    margin-top: 20px; 
+    padding: 10px;
+    background: rgb(141, 110, 103);
+    text-shadow: 2px 2px 4px #4a3939;
+    text-align: right; 
+    position: fixed;
+    bottom: 0; 
+    left: 0; 
+    right: 0;
+}
