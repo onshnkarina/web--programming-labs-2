@@ -188,5 +188,4 @@ def example():
     laba = '2'
     group = 'ФБИ-24'
     course ='3'
-    return render_template('example.html', name=name, laba=laba, 
-                           group=group,course=course)
+    return render_template('example.html', name=name, course=course, laba=laba, group=group)
