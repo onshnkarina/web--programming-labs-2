@@ -268,3 +268,19 @@ def redirect_to_default():
 @app.route('/lab2/calc/<int:a>')
 def redirect_with_default_b(a):
     return redirect(f'/lab2/calc/{a}/1')
+
+book_spisok = [
+    {"author": "Михаил Булгаков", "title": "Мастер и Маргарита", "genre": "Роман", "pages": 504},
+    {"author": "Габриэль Гарсия Маркес", "title": "Сто лет одиночества", "genre": "Роман", "pages": 422},
+    {"author": "Джордж Оруэлл", "title": "1984", "genre": "Антиутопия", "pages": 328},
+    {"author": "Фёдор Достоевский", "title": "Преступление и наказание", "genre": "Роман", "pages": 430},
+    {"author": "Лев Толстой", "title": "Анна Каренина", "genre": "Роман", "pages": 864},
+    {"author": "Стивен Кинг", "title": "Сияние", "genre": "Ужасы", "pages": 447},
+    {"author": "Джордж Мартин", "title": "Игра престолов", "genre": "Фэнтези", "pages": 694},
+    {"author": "Сент-Экзюпери Антуан де", "title": "Маленький принц", "genre": "Сказка", "pages": 96},
+    {"author": "Льюис Кэрролл", "title": "Алиса в стране чудес", "genre": "Сказка", "pages": 96},
+    {"author": "Джейн Остин", "title": "Гордость и предубеждение", "genre": "Роман", "pages": 432}
+]
+@app.route('/lab2/books')
+def show_books():
+    return render_template('books.html', books=book_spisok)
