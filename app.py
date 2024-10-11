@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template, request
 app = Flask(__name__)
 
 @app.route("/")
@@ -169,55 +169,34 @@ flower_list = ['роза', 'тюльпан', 'незабудка', 'ромашк
 def flowers(flower_id):
     if flower_id >= len(flower_list):
         return "такого цветка нет", 404
-    else:
-        return "цветок: " + flower_list[flower_id]
+    del flower_data[flower_id]
+    return redirect(url_for('show_all_flowers'))
 
-@app.route('/lab2/add_flower/<name>')
-def add_flower(name):
-    if not name:
-        return "Вы не задали имя цветка", 400
-    flower_list.append(name)
-    return f'''
-<!doctype html>
-<html>
-    <body>
-    <h1>Добавлен новый цветок</h1>
-    <p>Название нового цветка: {name} </p>
-    <p>Всего цветов: {len(flower_list)}</p>
-    <p>Полный список: {flower_list}</p>
-    <a href="/lab2/flowers">Посмотреть все цветы</a>
-    </body>
-</html>
-'''
+@app.route('/lab2/add_flowers', methods=['POST']) 
+def add_flowers():  
+    name = request.form.get('name')  
+    price = request.form.get('price') 
+    if not name or not price:  
+        return "Неверные данные", 400  
+    flower_data.append({'name': name, 'price': int(price)})  
+                                                            
+    return redirect(url_for('show_all_flowers')) 
 
 @app.route('/lab2/flowers')
 def show_all_flowers():
-    return f'''
-<!doctype html>
-<html>
-    <body>
-    <h1> Все цветы </h1>
-    <p> Всего цветов: {len(flower_list)} </p>
-    <ul>
-        {"".join(f"<li>{flower}</li>" for flower in flower_list)}
-    </ul>
-    <a href="/lab2/clearflowers">Очистить список цветов</a>
-    </body>
-</html>
-'''
+   return render_template('flowers.html', flowers=flower_data)
 
 @app.route('/lab2/clearflowers')
 def clear_flowers():
     flower_list.clear()  
-    return '''
-<!doctype html>
-<html>
-    <body>
-    <h1> Список цветов полностью очищен </h1>
-    <a href="/lab2/flowers">Посмотреть все цветы</a>
-    </body>
-</html> 
-'''
+    return redirect(url_for('show_all_flowers'))
+
+@app.route('/lab2/delete_flower/<int:flower_id>')
+def delete_flower(flower_id):
+    if flower_id >= len(flower_data):
+        return "Такого цветка нет", 404
+    del flower_data[flower_id]
+    return redirect(url_for('show_all_flowers'))
 
 @app.route('/lab2/example')
 def example():
@@ -306,3 +285,10 @@ dogs = [
 @app.route('/lab2/dogs')
 def show_dogs():
     return render_template('dogs.html', dogs=dogs)
+
+flower_data = [
+    {'name': 'роза', 'price': 150},
+    {'name': 'тюльпан', 'price': 100},
+    {'name': 'незабудка', 'price': 50},
+    {'name': 'ромашка', 'price': 75},
+]
