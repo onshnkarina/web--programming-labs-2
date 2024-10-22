@@ -25,3 +25,26 @@ footer {
     left: 0; 
     right: 0;
 }
+.error {
+    color:red;
+    font-weight: bold;
+}
+
+.b {
+    background-color: #5b2323;
+    border: 3px solid rgb(78, 75, 75);
+    border-radius: 30px;
+    padding: 3 20px;
+    color: aliceblue;
+}
+.p {
+    background-color: #e4e4e4;
+    border: 3px solid rgb(78, 75, 75);
+    border-radius: 30px;
+    width: 150px;
+    height: 40px;
+    color: #523c3c;
+    font-size: 16px;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
