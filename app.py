@@ -20,7 +20,7 @@ def menu ():
 <html>
     <head>
         <title>НГТУ, ФБ, Лабораторные работы</title>
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/lab1.css') + '''">
     </head>
     <body>
         <header>
@@ -47,7 +47,7 @@ def menu ():
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <link rel="stylesheet" href="''' + url_for('static', filename='autumn.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/autumn.css') + '''">
     </head>
     <body>
         <h1>Интересные факты об осени</h1>
@@ -59,7 +59,7 @@ def menu ():
         <p>Осенняя депрессия — реально существующий диагноз. Ей подвержено около 5 % населения стран, в которых осень есть.</p>
         <p>Мокрые листья, усеивающие дорогу каждую осень, очень скользки. На них может легко упасть пешеход, а тормозной путь автомобиля на 
         листьях удлиняется в 5–10 раз.</p>
-        <img style="border-radius: 10px;" src="''' + url_for('static',filename='autumn.jpg') + '''">
+        <img style="border-radius: 10px;" src="''' + url_for('static',filename='lab1/autumn.jpg') + '''">
     </body>
 </html>
 '''
