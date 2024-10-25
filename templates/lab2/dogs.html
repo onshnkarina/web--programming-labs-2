@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Онищенко Арина. Лабораторная работа 2
     </title>
-    <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='lab1/main.css')}}">
     <style>
         h1 {
             text-align: center;
@@ -41,7 +41,7 @@
         <div class="dogs-container">
             {% for dogs in dogs %}
             <div class="dogs-block">
-                <img src="{{ url_for('static', filename='dogs/' + dogs.image) }}">
+                <img src="{{ url_for('static', filename='lab2/dogs/' + dogs.image) }}">
                 <h2>{{ dogs.name }}</h2>
                 <div>{{ dogs.description }}</div>
             </div>
