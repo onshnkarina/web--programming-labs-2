@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+    <h1>Ваш билет</h1>
+    <p>ФИО пассажира: {{ passenger_name }}</p>
+    <p>Тип билета: {{ ticket_type }}</p>
+    <p>Цена: {{ ticket_price }} руб.</p>
+    <p>Пункт выезда: {{ departure_point }}</p>
+    <p>Пункт назначения: {{ destination_point }}</p>
+    <p>Дата поездки: {{ travel_date }}</p>
+    <a href="{{ url_for('lab3.ticket') }}">Оформить новый билет</a>
+{% endblock %}
