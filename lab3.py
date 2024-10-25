@@ -145,3 +145,38 @@ def clear_cookies():
     resp.delete_cookie('font_style')
     
     return resp
+
+
+
+phones = [
+    {'name': 'Apple iPhone 14 Pro', 'price': 120000, 'brand': 'Apple', 'color': 'Чёрный'},
+    {'name': 'Samsung Galaxy S23 Ultra', 'price': 110000, 'brand': 'Samsung', 'color': 'Зелёный'},
+    {'name': 'Google Pixel 7 Pro', 'price': 85000, 'brand': 'Google', 'color': 'Белый'},
+    {'name': 'Xiaomi 13 Pro', 'price': 75000, 'brand': 'Xiaomi', 'color': 'Синий'},
+    {'name': 'OnePlus 11', 'price': 65000, 'brand': 'OnePlus', 'color': 'Чёрный'},
+    {'name': 'Sony Xperia 1 IV', 'price': 95000, 'brand': 'Sony', 'color': 'Фиолетовый'},
+    {'name': 'Huawei P60 Pro', 'price': 82000, 'brand': 'Huawei', 'color': 'Золотой'},
+    {'name': 'Oppo Find X5 Pro', 'price': 70000, 'brand': 'Oppo', 'color': 'Серебристый'},
+    {'name': 'Realme GT 3', 'price': 60000, 'brand': 'Realme', 'color': 'Красный'},
+    {'name': 'Asus ROG Phone 7', 'price': 105000, 'brand': 'Asus', 'color': 'Чёрный'},
+    {'name': 'Nokia X30 5G', 'price': 45000, 'brand': 'Nokia', 'color': 'Синий'},
+    {'name': 'Motorola Edge 40 Pro', 'price': 72000, 'brand': 'Motorola', 'color': 'Белый'},
+    {'name': 'ZTE Axon 40 Ultra', 'price': 68000, 'brand': 'ZTE', 'color': 'Чёрный'},
+    {'name': 'Vivo X90 Pro', 'price': 77000, 'brand': 'Vivo', 'color': 'Серый'},
+    {'name': 'Honor Magic 5 Pro', 'price': 80000, 'brand': 'Honor', 'color': 'Зелёный'},
+    {'name': 'Tecno Phantom X2 Pro', 'price': 55000, 'brand': 'Tecno', 'color': 'Оранжевый'},
+    {'name': 'Poco F5 Pro', 'price': 50000, 'brand': 'Poco', 'color': 'Чёрный'},
+    {'name': 'Lenovo Legion Duel 2', 'price': 100000, 'brand': 'Lenovo', 'color': 'Серебристый'},
+    {'name': 'Meizu 20 Pro', 'price': 65000, 'brand': 'Meizu', 'color': 'Белый'},
+    {'name': 'Alcatel 1S 2023', 'price': 12000, 'brand': 'Alcatel', 'color': 'Синий'}
+]
+
+@lab3.route('/lab3/search')
+def search():
+    return render_template('lab3/search.html')
+@lab3.route('/lab3/res')
+def res():
+    min_price = request.args.get('min_price', type=int)
+    max_price = request.args.get('max_price', type=int)
+    filtered_phones = [phone for phone in phones if min_price <= phone["price"] <= max_price]
+    return render_template('lab3/res.html', phones=filtered_phones)
