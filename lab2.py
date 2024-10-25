@@ -34,7 +34,7 @@ def add_flowers():
 
 @lab2.route('/lab2/flowers')
 def show_all_flowers():
-   return render_template('flowers.html', flowers=flower_data)
+   return render_template('lab2/flowers.html', flowers=flower_data)
 
 
 @lab2.route('/lab2/clearflowers')
@@ -64,19 +64,19 @@ def example():
         {'name': 'мандарины', 'price': 95}, 
         {'name': 'манго', 'price': 321}
     ]
-    return render_template('example.html', name=name, course=course, laba=laba, 
+    return render_template('lab2/example.html', name=name, course=course, laba=laba, 
                            group=group, fruits=fruits)
 
 
 @lab2.route('/lab2/')
 def lab():
-    return render_template('lab2.html')
+    return render_template('lab2/lab2.html')
 
 
 @lab2.route('/lab2/filters')
 def filters():
     phrase = "О <b>сколько</b> <u>нам</u> <i>открытий</i> чудных..."
-    return render_template('filter.html', phrase = phrase)
+    return render_template('lab2/filter.html', phrase = phrase)
 
 
 @lab2.route('/lab2/calc/<int:a>/<int:b>')
@@ -126,7 +126,7 @@ book_spisok = [
 
 @lab2.route('/lab2/books')
 def show_books():
-    return render_template('books.html', books=book_spisok)
+    return render_template('lab2/books.html', books=book_spisok)
 
 dogs = [
     {"name": "Кавалер-кинг-чарльз-спаниель", "description": "Эта порода была названа в честь короля Карла II, который жил в 17 веке. Он не имел прямого отношения к разведению собак, но во время его правления для маленьких спаниелей все двери были открыты.", 
@@ -146,7 +146,7 @@ dogs = [
 
 @lab2.route('/lab2/dogs')
 def show_dogs():
-    return render_template('dogs.html', dogs=dogs)
+    return render_template('lab2/dogs.html', dogs=dogs)
 
 flower_data = [
     {'name': 'роза', 'price': 150},

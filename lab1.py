@@ -65,11 +65,11 @@ def oak():
 <html>
     <head>
         <title>НГТУ, ФБ, Лабораторные работы</title>
-        <link rel="stylesheet" href="''' + url_for('static', filename='lab1.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab/lab1.css') + '''">
     </head>
     <body>
         <h1>Дуб</h1>
-        <img src="''' + url_for('static',filename='oak.jpg') + '''">
+        <img src="''' + url_for('static',filename='lab1/oak.jpg') + '''">
     </body>
 </html>
 '''
@@ -86,7 +86,7 @@ def student():
     </head>
     <body>
         <h1>Онищенко Арина Сергеевна</h1>
-        <img src="''' + url_for('static',filename='logo.png') + '''">
+        <img src="''' + url_for('static',filename='lab1/logo.png') + '''">
     </body>
 </html>
 '''
@@ -99,7 +99,7 @@ def python():
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <link rel="stylesheet" href="''' + url_for('static', filename='python.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/python.css') + '''">
     </head>
     <body>
         <h1>Интересные факты о языке Python</h1>
@@ -114,7 +114,7 @@ def python():
 
         <p>Согласно недавнему опросу, в 2015 году в Великобритании Python обогнал французский и стал самым популярным 
         языком в начальных школах. Из 10 родителей, 6 предпочли, чтобы их дети изучали Python, а не французский.</p>
-        <img style="border-radius: 10px;" src="''' + url_for('static',filename='python.jpg') + '''">
+        <img style="border-radius: 10px;" src="''' + url_for('static',filename='lab1/python.jpg') + '''">
     </body>
 </html>
 '''
@@ -126,7 +126,7 @@ def autumn():
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <link rel="stylesheet" href="''' + url_for('static', filename='autumn.css') + '''">
+        <link rel="stylesheet" href="''' + url_for('static', filename='lab1/autumn.css') + '''">
     </head>
     <body>
         <h1>Интересные факты об осени</h1>
@@ -138,7 +138,7 @@ def autumn():
         <p>Осенняя депрессия — реально существующий диагноз. Ей подвержено около 5 % населения стран, в которых осень есть.</p>
         <p>Мокрые листья, усеивающие дорогу каждую осень, очень скользки. На них может легко упасть пешеход, а тормозной путь автомобиля на 
         листьях удлиняется в 5–10 раз.</p>
-        <img style="border-radius: 10px;" src="''' + url_for('static',filename='autumn.jpg') + '''">
+        <img style="border-radius: 10px;" src="''' + url_for('static',filename='lab1/autumn.jpg') + '''">
     </body>
 </html>
 '''
