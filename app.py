@@ -5,6 +5,9 @@ from lab3 import lab3
 from lab4 import lab4
 
 app = Flask(__name__)
+
+app.secret_key = 'Секретно-секретный секрет'
+
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
 app.register_blueprint(lab3)
@@ -34,7 +37,7 @@ def menu ():
                 <li><a href="/lab1">Первая лабораторная</a></li>
                 <li><a href="/lab2">Вторая лабораторная</a></li>
                 <li><a href="/lab3">Третья лабораторная</a></li>
-                <li><a href="http://127.0.0.1:5000/lab4">Четвертая лабораторная</a></li>
+                <li><a href="/lab4">Четвертая лабораторная</a></li>
             </ul>
         </nav>
         </main>
