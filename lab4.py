@@ -198,12 +198,14 @@ def zerno():
         total_price = weight * price_ton
         discount_message = None
         if weight > 50:
-            discount = 0.1  # 10% скидка
+            discount = 0.1  
+            sk = total_price / 10
             total_price *= (1 - discount)
-            discount_message = "Применена скидка 10% за большой объём."
+            discount_message = f"Применена скидка 10% за большой объём. Размер скидки: {sk} руб"
         message = f"Заказ успешно сформирован. Вы заказали {grain_name_ru}. Вес: {weight} т. Сумма к оплате: {total_price:.2f} руб."
         return render_template('lab4/zerno.html', message=message, discount=discount_message)
     return render_template('lab4/zerno.html')
+
 
 @lab4.route('/lab4/reg', methods=['GET', 'POST'])
 def reg():
