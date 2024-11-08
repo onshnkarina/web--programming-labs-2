@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block main %}
+<h1>Регистрация</h1>
+<form method="post">
+    <div>
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name">
+    </div>
+    <div>
+        <label for="login">Логин:</label>
+        <input type="text" id="login" name="login">
+    </div>
+    <div>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password">
+    </div>
+    {% if error %}
+        <div style="color: rgb(168, 0, 0);">{{ error }}</div>
+    {% endif %}
+    <button type="submit">Зарегистрироваться</button>
+</form>
+{% endblock %}
