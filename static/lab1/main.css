@@ -48,3 +48,20 @@ footer {
     padding: 0 20px;
     margin-bottom: 15px;
 }
+
+.bt {
+    display: inline-block;
+    padding:  10px;
+    margin: 5px;
+    background-color: #423d85;
+    border-radius: 5px;
+    text-align: center;
+}
+a.bt {
+    color: white;
+}
+.bt-container{
+    background-color: #818ac9;
+    padding: 20px;
+    text-align: center;
+}
