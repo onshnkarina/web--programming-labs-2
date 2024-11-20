@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 5{% endblock %}
+
+{% block main %}
+    <h1> Поздравляем, вход выполнен успешно! </h1>
+  
+    <a href="{{ url_for('lab5.lab') }}">Перейти к главному меню</a>
+{% endblock %}

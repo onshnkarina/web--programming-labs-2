@@ -10,6 +10,6 @@
     <a href="{{ url_for('lab5.list') }}" class="bt">Список статей</a>
     <a href="{{ url_for('lab5.create') }}" class="bt">Создать статью</a>
 </div>
-<p style="text-align: right; margin:35px;">Anonymous</p>
+<p style="text-align: right; margin:35px;">{{ login if login else 'Anonymou' }}</p>
 
 {% endblock %}
