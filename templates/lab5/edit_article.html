@@ -1,26 +1,22 @@
 {% extends 'base.html' %}
-
 {% block lab %}Лабораторная работа 5{% endblock %}
-
 {% block main %}
-    <h1> Создание статьи</h1>
+    <h1>Редактирование статьи</h1>
     {% if error %}
-        <div style="color: red;">
-            {{ error }}
-        </div>
+        <div style="color: red;">{{ error }}</div>
     {% endif %}
     <form method="post">
         <div>
             <label>
                 Название статьи:
-                <input type="text" maxlength="50" name="tittle">
+                <input type="text" maxlength="50" name="tittle" value="{{ article['tittle'] }}">
             </label>
         </div>
         <div>
-            <textarea name="article_text"></textarea>
+            <textarea name="article_text">{{ article['article_text'] }}</textarea>
         </div>
         <div>
-            <button type="submit"> Готово </button>
+            <button type="submit">Обновить</button>
         </div>
     </form>
 {% endblock %}

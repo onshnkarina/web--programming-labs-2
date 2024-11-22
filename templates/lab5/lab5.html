@@ -3,13 +3,14 @@
 {% block lab %}Лабораторная работа 5{% endblock %}
 
 {% block main %}
-<h2 style="text-align: center;" > База знаний</h2>
+<h2 style="text-align: center;"> База знаний</h2>
 <div class="bt-container">
     <a href="{{ url_for('lab5.login') }}" class="bt">Вход</a>
     <a href="{{ url_for('lab5.register') }}" class="bt">Регистрация</a>
     <a href="{{ url_for('lab5.list') }}" class="bt">Список статей</a>
     <a href="{{ url_for('lab5.create') }}" class="bt">Создать статью</a>
+    <a href="{{ url_for('lab5.logout') }}" class="block">Выйти</a>
 </div>
-<p style="text-align: right; margin:35px;">{{ login if login else 'Anonymou' }}</p>
+<p style="text-align: right; margin:35px;">{{ login if login else 'Anonymous' }}</p>
 
 {% endblock %}
