@@ -5,18 +5,28 @@
     {% if error %}
         <div style="color: red;">{{ error }}</div>
     {% endif %}
-    <form method="post">
+    <form method="POST">
         <div>
-            <label>
-                Название статьи:
-                <input type="text" maxlength="50" name="tittle" value="{{ article['tittle'] }}">
-            </label>
+            <label for="tittle">Название статьи:</label>
+            <input type="text" name="tittle" id="tittle" value="{{ article.tittle }}" required>
+        </div>
+        
+        <div>
+            <label for="article_text">Текст статьи:</label>
+            <p>
+                <textarea name="article_text" id="article_text" required>{{ article.article_text }}</textarea>
+            </p>  
         </div>
         <div>
-            <textarea name="article_text">{{ article['article_text'] }}</textarea>
+            <label for="is_favorite">Избранная:</label>
+            <input type="checkbox" name="is_favorite" id="is_favorite" {% if article.is_favorite %}checked{% endif %}>
         </div>
         <div>
-            <button type="submit">Обновить</button>
+            <label for="is_public">Публичная:</label>
+            <input type="checkbox" name="is_public" id="is_public" {% if article.is_public %}checked{% endif %}>
+        </div>
+        <div>
+            <button type="submit">Сохранить изменения</button>
         </div>
     </form>
 {% endblock %}

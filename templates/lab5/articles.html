@@ -5,18 +5,21 @@
 {% block main %}
     <h1>Статьи</h1>
 
-    {% if message %}
-        <div>{{ message }}</div>  
-    {% endif %}
     {% if articles %}
         {% for article in articles %}
-            <h2>{{ article['tittle'] }}</h2>
-            <blockquote>{{ article['article_text'] }}</blockquote>
-            <form action="{{ url_for('lab5.delete', article_id=article['id']) }}" method="post">
+            <h2>{{ article.tittle }}</h2>
+            <blockquote>{{ article.article_text }}</blockquote>
+            
+            {% if article.is_favorite %}(Избранная){% endif %}
+            {% if article.is_public %}(Публичная){% endif %}
+            <p></p>
+            <form action="{{ url_for('lab5.delete', article_id=article.id) }}" method="post">
                 <button type="submit">Удалить</button>
             </form>
             <p></p>
-            <a href="{{ url_for('lab5.edit', article_id=article['id']) }}">Редактировать</a>
+            <a href="{{ url_for('lab5.edit', article_id=article.id) }}">Редактировать</a>
         {% endfor %}
+    {% else %}
+        <p>{{ message }}</p>
     {% endif %}
 {% endblock %}
