@@ -17,35 +17,39 @@ function getOfficeList() {
         body: JSON.stringify(json)
     })
     .then(function(response) {
-        return response.json()
+        return response.json();
     })
  
-    .then (function(data) {
-        const office_list = data.result;
+    .then(function(data) {
+        const result = data.result;
+        const offices = result.offices;
+        const totalCost = result.total_cost;
         const ul = document.getElementById('office-list');
         ul.innerHTML = '';
-        for (let i=0; i< office_list.length; i++) {
-            const office = office_list[i];
+        for (let i = 0; i < offices.length; i++) {
+            const office = offices[i];
             const li = document.createElement('li');
-            li.innerText = `${office.number}: ${office.tenant || 'свободен'}`;
-            
-            if (office.tenant == false) {
+            li.innerText = `${office.number}: ${office.tenant || 'свободен'}, Цена: ${office.price} руб.`;
+            if (!office.tenant) {
                 const bookingButton = document.createElement('button');
-                bookingButton.innerText = 'Зарезервирвировать'
-                bookingButton.onclick = function() {booking(office.number)};
+                bookingButton.innerText = 'Зарезервировать';
+                bookingButton.onclick = function() { booking(office.number); };
                 li.appendChild(bookingButton);
             }
             else {
                 const releaseButton = document.createElement('button');
-                releaseButton.innerText = 'Освободить'
-                releaseButton.onclick = function() {release(office.number)};
+                releaseButton.innerText = 'Освободить';
+                releaseButton.onclick = function() { release(office.number); };
                 li.appendChild(releaseButton);
             }
             
             ul.appendChild(li);
         }
-    })
-}  
+
+        const totalCostDiv = document.getElementById('total-cost');
+        totalCostDiv.innerText = `Общая стоимость аренды: ${totalCost} руб.`;
+    });
+}
 function booking(officeNumber) {
     const url = '/lab6/json-rpc-api/';
     const json = {
@@ -131,4 +135,5 @@ document.addEventListener('DOMContentLoaded', function(){
 {% block main %}
     <h1> Список кабинетов </h1>
     <ul id = "office-list"></ul>
+    <div id="total-cost"></div>
 {% endblock %}
