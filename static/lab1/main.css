@@ -65,3 +65,54 @@ a.bt {
     padding: 20px;
     text-align: center;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+#office-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px;
+}
+
+#office-list li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#office-list li button {
+    background-color: #701735;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#office-list li button:hover {
+    background-color: #551011;
+}
+
+#total-cost {
+    text-align: center;
+    font-size: 1.2em;
+    color: #2f0808;
+    margin-top: 20px;
+}
