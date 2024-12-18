@@ -6,12 +6,18 @@ from lab4 import lab4
 from lab5 import lab5
 from lab6 import lab6
 from lab7 import lab7
+from rgz_5 import rgz_5
 import os
+from os import path
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'секретно-секретный секрет')
 app.config['DB_TYPE'] = os.getenv('DB_TYPE', 'postgres')
+app.config['UPLOAD_FOLDER'] = path.join('static', 'uploads')
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+
+
 
 app.register_blueprint(lab1)
 app.register_blueprint(lab2)
@@ -20,6 +26,7 @@ app.register_blueprint(lab4)
 app.register_blueprint(lab5)
 app.register_blueprint(lab6)
 app.register_blueprint(lab7)
+app.register_blueprint(rgz_5)
 
 @app.route("/")
 @app.route("/index")
@@ -49,6 +56,7 @@ def menu ():
                 <li><a href="/lab5">Пятая лабораторная</a></li> 
                 <li><a href="/lab6">Шестая лабораторная</a></li>  
                 <li><a href="/lab7">Седьмая лабораторная</a></li>  
+                <li><a href="/rgz">РГЗ</a></li>
             </ul>
         </nav>
         </main>
