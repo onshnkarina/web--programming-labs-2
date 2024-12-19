@@ -1,8 +1,7 @@
 function registration() {
     const user = {
-
-        username: document.getElementById('username').value,
-        password: document.getElementById('password').value,
+        username: document.getElementById('username').value.trim(),
+        password: document.getElementById('password').value.trim(),
     }
 
     const url =`/rgz/rest-api/users/registration`;
@@ -13,6 +12,7 @@ function registration() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(user)
     })
+    
     .then(function(resp) {
         if(resp.ok) {
             alert("Регистрация прошла успешно, теперь можете войти");
@@ -27,6 +27,10 @@ function registration() {
         if(errors.exception)
             document.getElementById('username-error').innerText= errors.exception;
     });
+    if (!user.username || !user.password) {
+        alert("Пожалуйста, заполните все поля.");
+        return;
+    }
 }
 
 
