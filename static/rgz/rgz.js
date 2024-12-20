@@ -2,37 +2,49 @@ function registration() {
     const user = {
         username: document.getElementById('username').value.trim(),
         password: document.getElementById('password').value.trim(),
-    }
+    };
 
-    const url =`/rgz/rest-api/users/registration`;
-    const method ='POST';
-
-    fetch(url, {
-        method: method,
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(user)
-    })
-    
-    .then(function(resp) {
-        if(resp.ok) {
-            alert("Регистрация прошла успешно, теперь можете войти");
-        }
-        return resp.json();
-    })
-    .then(function(errors) {
-        if(errors.username)
-            document.getElementById('username-error').innerText = errors.username;
-        if(errors.password)
-            document.getElementById('password-error').innerText = errors.password;
-        if(errors.exception)
-            document.getElementById('username-error').innerText= errors.exception;
-    });
+    // Проверка полей перед отправкой
     if (!user.username || !user.password) {
         alert("Пожалуйста, заполните все поля.");
         return;
     }
-}
 
+    const url = `/rgz/rest-api/users/registration`;
+    const method = 'POST';
+
+    fetch(url, {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user)
+    })
+    .then(function(resp) {
+        if (resp.ok) {
+            alert("Регистрация прошла успешно, теперь можете войти");
+            return resp.json();
+        } else {
+            return resp.json().then(err => {
+                throw new Error(JSON.stringify(err));
+            });
+        }
+    })
+    .then(function(data) {
+        console.log("Registration successful:", data);
+    })
+    .catch(function(error) {
+        try {
+            const errors = JSON.parse(error.message);
+            if (errors.username)
+                document.getElementById('username-error').innerText = errors.username;
+            if (errors.password)
+                document.getElementById('password-error').innerText = errors.password;
+            if (errors.exception)
+                document.getElementById('username-error').innerText = errors.exception;
+        } catch (e) {
+            document.getElementById('username-error').innerText = "Ошибка сервера: " + error.message;
+        }
+    });
+}
 
 function login() {
     const user = {

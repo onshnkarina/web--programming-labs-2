@@ -79,53 +79,42 @@ def add_user():
 def login_user():
     data = request.get_json()
 
-    # Проверка обязательных полей
+
     if not data.get('username'):
         return {'username': 'Введите никнэйм'}, 400
     if not data.get('password'):
         return {'password': 'Введите пароль'}, 400
 
-    conn = None  # Инициализация переменной conn
-    cur = None  # Инициализация переменной cur
-
     try:
-        conn, cur = db_connect()  # Подключение к базе данных
-
-        # Выполнение запроса для поиска пользователя
+        conn, cur = db_connect()
         if current_app.config['DB_TYPE'] == 'postgres':
             cur.execute("SELECT id, username, password FROM users WHERE username = %s", (data['username'],))
+            user = cur.fetchone()  
         else:
             cur.execute("SELECT id, username, password FROM users WHERE username = ?", (data['username'],))
+            user = cur.fetchone()
 
-        user = cur.fetchone()  # Получение результата запроса
-
-        # Проверка, найден ли пользователь
         if not user:
+            db_close(conn, cur)
             return {'username': 'Пользователь не найден'}, 400
 
-        # Извлечение данных пользователя
-        user_id = user['id']
-        username = user['username']
-        password_hash = user['password']
+        user_id = user['id'] if current_app.config['DB_TYPE'] == 'postgres' else user['id']
+        username = user['username'] if current_app.config['DB_TYPE'] == 'postgres' else user['username']
+        password_hash = user['password'] if current_app.config['DB_TYPE'] == 'postgres' else user['password']
 
-        # Проверка пароля
         if not check_password_hash(password_hash, data['password']):
+            db_close(conn, cur)
             return {'password': 'Неверный пароль'}, 400
 
-        # Установка сессии
         session['user_id'] = user_id
         session['username'] = username
-
-        return {}, 200  # Успешный вход
+        db_close(conn, cur)
+        return {}, 200
 
     except Exception as e:
-        # Обработка исключений
+        db_close(conn, cur)
         return {'exception': str(e)}, 400
-
-    finally:
-        # Закрытие соединения с базой данных
-        if conn and cur:
-            db_close(conn, cur)
+    
 @rgz_5.route('/main')
 def rgz_5_main_page():
     if 'user_id' not in session:

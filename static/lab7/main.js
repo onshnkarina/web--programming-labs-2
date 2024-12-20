@@ -48,6 +48,9 @@ function deleteFilm(id, title) {
 function showModal() {
     document.querySelector('div.modal').style.display = 'block';
     document.getElementById('description-error').innerText = '';
+    document.getElementById('title-error').innerText = '';
+    document.getElementById('title_ru-error').innerText = '';
+    document.getElementById('year-error').innerText = '';
 }
 function hideModal() {
     document.querySelector('div.modal').style.display = 'none'
@@ -89,6 +92,14 @@ function sendFilm() {
     .then (function(errors) {
         if (errors.description)
             document.getElementById('description-error').innerText = errors.description;
+        if (errors.title)
+            document.getElementById('title-error').innerText = errors.title;
+        
+        if (errors.title_ru)
+            document.getElementById('title_ru-error').innerText = errors.title_ru;
+        
+        if (errors.year)
+            document.getElementById('year-error').innerText = errors.year;
     });
 }
 function editFilm(id) {
@@ -98,10 +109,10 @@ function editFilm(id) {
     })
     .then (function (film){
         document.getElementById('id').value = id;
-        document.getElementById('title').value = film.title;
-        document.getElementById('title_ru').value = film.title_ru;
-        document.getElementById('year').value = film.year;
-        document.getElementById('description').value = film.description;
+        document.getElementById('title').value = film.title || '';
+        document.getElementById('title_ru').value = film.title_ru || '';
+        document.getElementById('year').value = film.year || '';
+        document.getElementById('description').value = film.description || '';
         showModal();
     })
 }
