@@ -42,38 +42,42 @@ def rgz():
 @rgz_5.route('/rgz/rest-api/users/registration', methods=['POST'])
 def add_user():
     data = request.get_json()
-  
+
+    # Проверка обязательных полей
     if not data.get('username'):
         return {'username': 'Придумайте свой ник'}, 400
     if not data.get('password'):
         return {'password': 'Заполните пароль'}, 400
-    
+
     password_hash = generate_password_hash(data['password'])
+
     try:
-        conn, cur = db_connect()
+        conn, cur = db_connect()  # Подключение к базе данных
 
         if current_app.config['DB_TYPE'] == 'postgres':
-
             cur.execute(
                 "INSERT INTO users (username, password) VALUES (%s, %s) RETURNING id",
                 (data['username'], password_hash)
             )
             new_user_id = cur.fetchone()['id']
         else:
-    
             cur.execute(
                 "INSERT INTO users (username, password) VALUES (?, ?)",
                 (data['username'], password_hash)
             )
-            new_user_id = cur.fetchone()  
-        
-        db_close(conn, cur)
+            conn.commit()  # Фиксируем транзакцию
+            cur.execute("SELECT last_insert_rowid()")  # Для SQLite
+            new_user_id = cur.fetchone()[0]
+
+        db_close(conn, cur)  # Закрываем соединение с базой данных
         return {"index": new_user_id}, 201
 
+    except psycopg2.IntegrityError as e:  # Для PostgreSQL
+        return {'username': 'Пользователь с таким именем уже существует'}, 400
+    except sqlite3.IntegrityError as e:  # Для SQLite
+        return {'username': 'Пользователь с таким именем уже существует'}, 400
     except Exception as e:
-        db_close(conn, cur)
         return {'exception': str(e)}, 400
-
 
 @rgz_5.route('/rgz/rest-api/users/login', methods=['POST'])
 def login_user():

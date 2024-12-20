@@ -2,52 +2,35 @@ function registration() {
     const user = {
         username: document.getElementById('username').value.trim(),
         password: document.getElementById('password').value.trim(),
-    };
+    }
 
-    // Проверка полей перед отправкой запроса
+    const url =`/rgz/rest-api/users/registration`;
+    const method ='POST';
+
+    fetch(url, {
+        method: method,
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(user)
+    })
+    
+    .then(function(resp) {
+        if(resp.ok) {
+            alert("Регистрация прошла успешно, теперь можете войти");
+        }
+        return resp.json();
+    })
+    .then(function(errors) {
+        if(errors.username)
+            document.getElementById('username-error').innerText = errors.username;
+        if(errors.password)
+            document.getElementById('password-error').innerText = errors.password;
+        if(errors.exception)
+            document.getElementById('username-error').innerText= errors.exception;
+    });
     if (!user.username || !user.password) {
         alert("Пожалуйста, заполните все поля.");
         return;
     }
-
-    const url = `https://onsharina.pythonanywhere.com/rgz/rest-api/users/registration`;
-    const method = 'POST';
-
-    fetch(url, {
-        method: method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user)
-    })
-    .then(function(resp) {
-        if (resp.ok) {
-            alert("Регистрация прошла успешно, теперь можете войти");
-            return resp.json(); // Возвращаем JSON для дальнейшей обработки
-        } else {
-            // Если статус ответа не 200, пытаемся получить текст ошибки
-            return resp.json().then(err => {
-                throw new Error(JSON.stringify(err)); // Преобразуем ошибку в строку
-            });
-        }
-    })
-    .then(function(data) {
-        // Если регистрация успешна, здесь можно обработать данные
-        console.log("Registration successful:", data);
-    })
-    .catch(function(error) {
-        // Обработка ошибок
-        try {
-            const errors = JSON.parse(error.message); // Пытаемся распарсить ошибку
-            if (errors.username)
-                document.getElementById('username-error').innerText = errors.username;
-            if (errors.password)
-                document.getElementById('password-error').innerText = errors.password;
-            if (errors.exception)
-                document.getElementById('username-error').innerText = errors.exception;
-        } catch (e) {
-            // Если не удалось распарсить ошибку, выводим общий текст ошибки
-            document.getElementById('username-error').innerText = "Ошибка сервера: " + error.message;
-        }
-    });
 }
 
 
