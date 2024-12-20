@@ -4,7 +4,7 @@ function registration() {
         password: document.getElementById('password').value.trim(),
     }
 
-    const url =`/rgz/rest-api/users/registration`;
+    const url =`https://onsharina.pythonanywhere.com/rgz/rest-api/users/registration`;
     const method ='POST';
 
     fetch(url, {
