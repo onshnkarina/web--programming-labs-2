@@ -42,83 +42,90 @@ def rgz():
 @rgz_5.route('/rgz/rest-api/users/registration', methods=['POST'])
 def add_user():
     data = request.get_json()
-
-    # Проверка обязательных полей
+  
     if not data.get('username'):
         return {'username': 'Придумайте свой ник'}, 400
     if not data.get('password'):
         return {'password': 'Заполните пароль'}, 400
-
+    
     password_hash = generate_password_hash(data['password'])
-
     try:
-        conn, cur = db_connect()  # Подключение к базе данных
+        conn, cur = db_connect()
 
         if current_app.config['DB_TYPE'] == 'postgres':
+
             cur.execute(
                 "INSERT INTO users (username, password) VALUES (%s, %s) RETURNING id",
                 (data['username'], password_hash)
             )
             new_user_id = cur.fetchone()['id']
         else:
+    
             cur.execute(
                 "INSERT INTO users (username, password) VALUES (?, ?)",
                 (data['username'], password_hash)
             )
-            conn.commit()  # Фиксируем транзакцию
-            cur.execute("SELECT last_insert_rowid()")  # Для SQLite
-            new_user_id = cur.fetchone()[0]
-
-        db_close(conn, cur)  # Закрываем соединение с базой данных
+            new_user_id = cur.fetchone()  
+        
+        db_close(conn, cur)
         return {"index": new_user_id}, 201
 
-    except psycopg2.IntegrityError as e:  # Для PostgreSQL
-        return {'username': 'Пользователь с таким именем уже существует'}, 400
-    except sqlite3.IntegrityError as e:  # Для SQLite
-        return {'username': 'Пользователь с таким именем уже существует'}, 400
     except Exception as e:
+        db_close(conn, cur)
         return {'exception': str(e)}, 400
+
 
 @rgz_5.route('/rgz/rest-api/users/login', methods=['POST'])
 def login_user():
     data = request.get_json()
 
-
+    # Проверка обязательных полей
     if not data.get('username'):
         return {'username': 'Введите никнэйм'}, 400
     if not data.get('password'):
         return {'password': 'Введите пароль'}, 400
 
+    conn = None  # Инициализация переменной conn
+    cur = None  # Инициализация переменной cur
+
     try:
-        conn, cur = db_connect()
+        conn, cur = db_connect()  # Подключение к базе данных
+
+        # Выполнение запроса для поиска пользователя
         if current_app.config['DB_TYPE'] == 'postgres':
             cur.execute("SELECT id, username, password FROM users WHERE username = %s", (data['username'],))
-            user = cur.fetchone()  
         else:
             cur.execute("SELECT id, username, password FROM users WHERE username = ?", (data['username'],))
-            user = cur.fetchone()
 
+        user = cur.fetchone()  # Получение результата запроса
+
+        # Проверка, найден ли пользователь
         if not user:
-            db_close(conn, cur)
             return {'username': 'Пользователь не найден'}, 400
 
-        user_id = user['id'] if current_app.config['DB_TYPE'] == 'postgres' else user['id']
-        username = user['username'] if current_app.config['DB_TYPE'] == 'postgres' else user['username']
-        password_hash = user['password'] if current_app.config['DB_TYPE'] == 'postgres' else user['password']
+        # Извлечение данных пользователя
+        user_id = user['id']
+        username = user['username']
+        password_hash = user['password']
 
+        # Проверка пароля
         if not check_password_hash(password_hash, data['password']):
-            db_close(conn, cur)
             return {'password': 'Неверный пароль'}, 400
 
+        # Установка сессии
         session['user_id'] = user_id
         session['username'] = username
-        db_close(conn, cur)
-        return {}, 200
+
+        return {}, 200  # Успешный вход
 
     except Exception as e:
-        db_close(conn, cur)
+        # Обработка исключений
         return {'exception': str(e)}, 400
-    
+
+    finally:
+        # Закрытие соединения с базой данных
+        if conn and cur:
+            db_close(conn, cur)
 @rgz_5.route('/main')
 def rgz_5_main_page():
     if 'user_id' not in session:
