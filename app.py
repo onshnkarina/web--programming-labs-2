@@ -10,6 +10,9 @@ from lab8 import lab8
 from rgz_5 import rgz_5
 import os
 from os import path
+from flask_sqlalchemy import SQLAlchemy
+from db import db
+from urllib.parse import quote
 
 app = Flask(__name__)
 
@@ -18,6 +21,19 @@ app.config['DB_TYPE'] = os.getenv('DB_TYPE', 'postgres')
 app.config['UPLOAD_FOLDER'] = path.join('static', 'uploads')
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
+if app.config['DB_TYPE'] == 'postgres':
+    db_name = 'ar_onishenko'
+    db_user = 'ar_onishenko'
+    db_password = '123'
+    host_ip = '127.0.0.1'
+    host_port = 5432
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{db_user}:{db_password}@{host_ip}:{host_port}/{db_name}'
+else:
+    dir_path = path.dirname(path.realpath(__file__))
+    db_path = path.join(dir_path, "ar_onishenko.db")
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ar_onishenko.db'
+    
+db.init_app(app)
 
 
 app.register_blueprint(lab1)
