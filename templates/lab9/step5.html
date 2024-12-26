@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+    <h1>Выберите вариант</h1>
+    <form method="POST">
+        {% if preference1 == 'tasty' %}
+            <button type="submit" name="preference2" value="sweet" class="button">Сладкое</button>
+            <button type="submit" name="preference2" value="hearty" class="button">Сытное</button>
+        {% else %}
+            <button type="submit" name="preference2" value="flowers" class="button">Цветы</button>
+            <button type="submit" name="preference2" value="jewelry" class="button">Украшения</button>
+        {% endif %}
+    </form>
+{% endblock %}

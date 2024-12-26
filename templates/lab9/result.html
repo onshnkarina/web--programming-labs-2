@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 9{% endblock %}
+
+{% block main %}
+    <h1>Поздравляем, {{ name }}!</h1>
+    <p>
+        {% if gender == 'male' %}
+            Желаем тебе быстро вырасти, быть умным и сильным!
+        {% else %}
+            Желаем тебе быстро вырасти, быть умной и красивой!
+        {% endif %}
+    </p>
+    <p>
+        {% if preference1 == 'tasty' and preference2 == 'sweet' %}
+            Вот тебе подарок — мешочек конфет!
+            <img src="{{ url_for('static', filename='lab9/candies.jpg') }}" alt="Конфеты" style="max-width: 300px;">
+        {% elif preference1 == 'tasty' and preference2 == 'hearty' %}
+            Вот тебе подарок — пицца!
+            <img src="{{ url_for('static', filename='lab9/pizza.jpg') }}" alt="Пицца" style="max-width: 300px;">
+        {% elif preference1 == 'beautiful' and preference2 == 'flowers' %}
+            Вот тебе подарок — букет цветов!
+            <img src="{{ url_for('static', filename='lab9/flowers.jpg') }}" alt="Цветы" style="max-width: 300px;">
+        {% else %}
+            Вот тебе подарок — украшение!
+            <img src="{{ url_for('static', filename='lab9/jewelry.jpg') }}" alt="Украшения" style="max-width: 300px;">
+        {% endif %}
+    </p>
+    <a href="{{ url_for('lab9.lab') }}" class="button">Создать ещё одну открытку</a>
+{% endblock %}
