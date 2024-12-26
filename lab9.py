@@ -1,15 +1,12 @@
 from flask import Blueprint, render_template, redirect, request, session, url_for
-from db import db
-from db.models import users, articles
-from flask_login import login_user, logout_user, login_required, current_user
-from werkzeug.security import check_password_hash, generate_password_hash
-from sqlalchemy import or_
-from werkzeug.utils import secure_filename
 
 lab9 = Blueprint('lab9', __name__)
 
 @lab9.route('/lab9/')
 def lab():
+    # Если данные уже есть в сессии, показываем последнее поздравление
+    if 'name' in session:
+        return redirect(url_for('lab9.result'))
     return render_template('lab9/index.html')
 
 @lab9.route('/lab9/step1', methods=['GET', 'POST'])
@@ -50,9 +47,17 @@ def step5():
 
 @lab9.route('/lab9/result')
 def result():
+    # Если данных нет, перенаправляем на первый шаг
+    if 'name' not in session:
+        return redirect(url_for('lab9.lab'))
     name = session.get('name')
     age = session.get('age')
     gender = session.get('gender')
     preference1 = session.get('preference1')
     preference2 = session.get('preference2')
     return render_template('lab9/result.html', name=name, age=age, gender=gender, preference1=preference1, preference2=preference2)
+
+@lab9.route('/lab9/reset')
+def reset():
+    session.clear()
+    return redirect(url_for('lab9.lab'))
