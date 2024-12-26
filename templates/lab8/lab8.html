@@ -1,16 +1,92 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 8</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #655768;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-{% block lab %}Лабораторная работа 8{% endblock %}
+        h2 {
+            color: #ffffff;
+            margin-bottom: 40px;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-{% block main %}
-<h2 style="text-align: center;"> База знаний</h2>
-<div class="block-container">
-    <a href="{{ url_for('lab8.register') }}" class="block">Регистрация</a>
-    <a href="{{ url_for('lab8.login') }}" class="block">Вход</a>
-    <a href="{{ url_for('lab8.article_list') }}" class="block">Статьи</a>
-    <a href="{{ url_for('lab8.create') }}" class="block">Создать статью</a>
-</div>
-<p style="text-align: right; margin:30px;">
-  Anonymous'
-</p>
-{% endblock %}
+        .block-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .block {
+            background-color: #c3b1cc;
+            color: #000000;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 50px; /* Круглые углы */
+            text-align: center;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            border: 2px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .block:hover {
+            background-color: #f8f8f8;
+            transform: translateX(10px); 
+        }
+
+        .block::before {
+            content: "→";
+            margin-right: 10px;
+            font-size: 20px;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+
+        .block:hover::before {
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 600px) {
+            .block {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% block lab %}Лабораторная работа 8{% endblock %}
+    {% block main %}
+    <h2>База знаний</h2>
+    <div class="block-container">
+        <a href="{{ url_for('lab8.register') }}" class="block">Регистрация</a>
+        <a href="{{ url_for('lab8.login') }}" class="block">Вход</a>
+        <a href="{{ url_for('lab8.article_list') }}" class="block">Статьи</a>
+        <a href="{{ url_for('lab8.create') }}" class="block">Создать статью</a>
+        <a href="{{ url_for('lab8.logout') }}" class="block">Выйти</a>
+    </div>
+    {% endblock %}
+</body>
+</html>
