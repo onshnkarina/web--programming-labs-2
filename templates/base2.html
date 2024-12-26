@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Онищенко Арина. {% block laba%}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='lab1/main.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" >
-     <style>
-        
+    <title>{{ title }}</title>
+    <style>
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            background-color: #0a3d62;
+            background-color: #0c3e18;
             margin: 0;
             padding: 0;
             display: flex;
@@ -62,7 +59,9 @@
             max-width: 100%;
             height: auto;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            margin-left: -250px;
         }
         input[type="text"], input[type="number"] {
             padding: 10px;
@@ -77,21 +76,11 @@
             margin-bottom: 20px;
         }
     </style>
-    {% block script %} {% endblock %}
 </head>
 <body>
-    <header>
-        WEB-программирование, часть 2. {{ self.laba() }}
-        <nav>
-            <a href="{{ url_for('menu') }}">Главное меню</a>
-        </nav>
-    </header>
-    <main>
+    <div class="container">
+        {% block lab %}{% endblock %}
         {% block main %}{% endblock %}
-    </main>
-    
-    <footer>
-        &copy; Онищенко Арина, ФБИ-24, 3 курс, 2024
-    </footer>
+    </div>
 </body>
 </html>

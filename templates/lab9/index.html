@@ -1,9 +1,8 @@
-{% extends 'base.html' %}
-
-{% block lab %}Лабораторная работа 9{% endblock %}
+{% extends 'base2.html' %}
 
 {% block main %}
-    <h1>Поздравления</h1>
+    <img src="{{ url_for('static', filename='lab9/new_year.png') }}" alt="Новый год" class="new-year-img">
+    <h1>Создайте новогоднюю открытку!</h1>
     {% if name %}
         <p>Ваше последнее поздравление для {{ name }}.</p>
         <a href="{{ url_for('lab9.result') }}" class="button">Посмотреть поздравление</a>

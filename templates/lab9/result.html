@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
-{% block lab %}Лабораторная работа 9{% endblock %}
+{% block lab %}Лабораторная работа 9 <div><a href="{{ url_for('menu') }}">Главное меню</a></div>{% endblock %}
 
 {% block main %}
     <h1>Поздравляем, {{ name }}!</h1>
@@ -28,4 +28,7 @@
     </p>
     <a href="{{ url_for('lab9.lab') }}" class="button">Создать ещё одну открытку</a>
     <a href="{{ url_for('lab9.reset') }}" class="button" style="background-color: #ff6b6b;">Сбросить данные</a>
+
+
+   
 {% endblock %}
