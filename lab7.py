@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, abort
+from datetime import datetime
 lab7 = Blueprint('lab7', __name__)
 @lab7.route('/lab7/')
 def main():
@@ -69,11 +70,21 @@ def del_film(id):
 @lab7.route('/lab7/rest-api/films/<int:id>', methods=['PUT'])
 def put_film(id):
     if 0 <= id < len(films):
-        film = request.get_json()
-        if film ['description'] == '':
+        film = request.get_json() 
+        if film.get('description', '') == '':
             return {'description': 'Заполните описание'}, 400
-        if not film.get('title'):
+        elif len(film['description']) > 2000:
+            return ({'description': 'Описание не должно превышать 2000 символов'}), 400
+        if not film.get('title') and not film.get('title_ru'):
+            return ({'title': 'Заполните поля с названиями'}), 400
+        if not film.get('title_ru'):
+            return ({'title_ru': 'Заполните русское название'}), 400
+        if film.get('title', '') == '':
             film['title'] = film['title_ru']
+        if not film.get('year'):
+            return ({'year': 'Укажите год выпуска фильма'}), 400
+        elif not str(film['year']).isdigit() or int(film['year']) < 1895 or int(film['year']) > 2100:
+            return ({'year': 'Введите корректный год (1895-2100)'}), 400
         films[id] = film
         return films[id]
     else:
@@ -86,7 +97,18 @@ def add_film():
         abort(404)
     if film.get('description', '') == '':
         return {'description': 'Заполните описание'}, 400
-    if not film.get('title'):
+    elif len(film['description']) > 2000:
+        return ({'description': 'Описание не должно превышать 2000 символов'}), 400
+    if not film.get('title') and not film.get('title_ru'):
+        return ({'title': 'Заполните поля с названиями'}), 400
+    if not film.get('title_ru'):
+        return ({'title_ru': 'Заполните русское название'}), 400
+    
+    if film.get('title', '') == '':
         film['title'] = film['title_ru']
+    if not film.get('year'):
+        return ({'year': 'Укажите год выпуска фильма'}), 400
+    elif not str(film['year']).isdigit() or int(film['year']) < 1895 or int(film['year']) > 2100:
+        return ({'year': 'Введите корректный год (1895-2100)'}), 400
     films.append(film)
     return {'id': len(films) - 1}, 201

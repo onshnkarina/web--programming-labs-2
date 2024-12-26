@@ -2,7 +2,10 @@
 {% block lab %}Лабораторная работа 8{% endblock %}
 {% block main %}
     <h1>Статьи</h1>
-    
+    <form action="{{ url_for('lab8.article_list') }}" method="post">
+        <input type="text" name="query" placeholder="Введите строку для поиска" value="{{ search_query }}">
+        <button type="submit">Поиск</button>
+    </form>
     {% if articles %}
         {% for article in articles %}
             <h2>{{ article.title }}</h2>
@@ -11,11 +14,13 @@
             {% if article.is_favorite %}(Избранная){% endif %}
             {% if article.is_public %}(Публичная){% endif %}
             <p></p>
-            <form action="{{ url_for('lab8.delete', id=article.id) }}" method="post">
-                <button type="submit">Удалить</button>
-            </form>
-            <p></p>
-            <a href="{{ url_for('lab8.edit', id=article.id) }}">Редактировать</a>
+            {% if current_user.is_authenticated and article.login_id == current_user.id %}
+                <form action="{{ url_for('lab8.delete', id=article.id) }}" method="post">
+                    <button type="submit">Удалить</button>
+                </form>
+                <p></p>
+                <a href="{{ url_for('lab8.edit', id=article.id) }}">Редактировать</a>
+            {% endif %}
         {% endfor %}
     {% else %}
         <p>Нет доступных статей.</p>
